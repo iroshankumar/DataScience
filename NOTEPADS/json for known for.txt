@@ -1,0 +1,18 @@
+import requests
+import pandas as pd
+
+url = "https://api.themoviedb.org/3/person/popular?language=en-US"
+
+headers = {
+    "accept": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZDVmYTExYWMzNWFkOTY1ODcwZGE5ODU5NjMwNDZjOCIsInN1YiI6IjY1YWY2MGRmM2UyZWM4MDBlYmYwNzY1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zUz-NA2S3IfGudnnF16nrmiPDmtzxAm5O8VmJ7qlrAA"
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+# Use pd.json_normalize to flatten the "known_for" field
+df = pd.json_normalize(data.get('results', []), 'known_for', errors='ignore')
+
+# Display the resulting DataFrame
+df

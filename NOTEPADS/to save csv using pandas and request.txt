@@ -1,0 +1,14 @@
+url="https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+response = requests.get(url)
+
+# Check if the request was successful (status code 200)
+if response.status_code == 200:
+    # Save the content of the response to a local CSV file
+    with open("downloaded_data.csv", "wb") as f:
+        f.write(response.content)
+    print("CSV file downloaded successfully")
+else:
+    print("Failed to download CSV file. Status code:", response.status_code)
+
+# Read the CSV file into a Pandas DataFrame
+df = pd.read_csv("downloaded_data.csv")
